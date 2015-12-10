@@ -33,10 +33,10 @@ time, then press `return` after each one to download and execute the
 script, respectively:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/18F/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/brentgardner/laptop/master/mac
 bash mac 2>&1 | tee ~/laptop.log
 ```
-The [script](https://github.com/18F/laptop/blob/master/mac) itself is
+The [script](https://github.com/brentgardner/laptop/blob/master/mac) itself is
 available in this repo for you to review if you want to see what it does
 and how it works.
 
@@ -47,11 +47,6 @@ automatically at the end of the script so you can set up everything you'll
 need to push code to GitHub.
 
 Once the script is done, make sure to quit and relaunch Terminal.
-
-More [detailed instructions with a video][video] are available in the Wiki.
-
-[Spotlight]: https://support.apple.com/en-us/HT204014
-[video]: https://github.com/18F/laptop/wiki/Detailed-installation-instructions-with-video
 
 Debugging
 ---------
@@ -74,7 +69,6 @@ What it sets up
 * [Homebrew Services] so you can easily stop, start, and restart services
 * [hub] for interacting with the GitHub API
 * [ImageMagick] for cropping and resizing images
-* [MySQL] for storing relational data
 * [Node.js] and [NPM], for running apps and installing JavaScript packages
 * [Postgres] for storing relational data
 * [Python 3] for programming software and data analysis
@@ -98,7 +92,6 @@ What it sets up
 [Homebrew Services]: https://github.com/gapple/homebrew-services
 [hub]: https://github.com/github/hub
 [ImageMagick]: http://www.imagemagick.org/
-[MySQL]: https://www.mysql.com/
 [Node.js]: http://nodejs.org/
 [NPM]: https://www.npmjs.org/
 [Postgres]: http://www.postgresql.org/
