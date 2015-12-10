@@ -52,9 +52,6 @@ case "$SHELL" in
     ;;
 esac
 
-# shellcheck disable=SC2016
-append_to_file "$HOME/.bin" 'export PATH="$HOME/.bin:$PATH"'
-
 brew_install_or_upgrade() {
   if brew_is_installed "$1"; then
     if brew_is_upgradable "$1"; then
@@ -129,7 +126,7 @@ if ! command -v brew >/dev/null; then
       'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
     # shellcheck disable=SC2016
-    append_to_file "$HOME/.bin" 'export PATH="/usr/local/bin:$PATH"'
+    append_to_file "$HOME/.zshrc" 'export PATH="/usr/local/bin:$PATH"'
 else
   fancy_echo "Homebrew already installed. Skipping ..."
 fi
@@ -139,40 +136,54 @@ brew update
 
 brew_install_or_upgrade 'git'
 
-# brew_install_or_upgrade 'the_silver_searcher'
+brew_install_or_upgrade 'the_silver_searcher'
 
-# brew_tap 'gapple/services'
+brew_tap 'gapple/services'
 
 brew_install_or_upgrade 'postgresql'
 fancy_echo 'Restarting postgres...'
 brew services restart postgresql
 
-#brew_install_or_upgrade 'mysql'
-#fancy_echo 'Restarting mysql...'
-#brew services restart mysql
-#sleep 2
-#mysql.server start
+# brew_install_or_upgrade 'mysql'
+# fancy_echo 'Restarting mysql...'
+# brew services restart mysql
+# sleep 2
+# mysql.server start
 
 #brew_install_or_upgrade 'redis'
 #fancy_echo 'Restarting redis...'
 #brew services restart redis
 
-#brew_install_or_upgrade 'imagemagick'
-#brew_install_or_upgrade 'qt'
+brew_install_or_upgrade 'imagemagick'
 
-#brew_install_or_upgrade 'hub'
+# PhantomJS doesn't support El Capitan yet
+# https://github.com/Homebrew/homebrew/issues/42249
+#if ! sw_vers -productVersion | grep -q "^10\.11"; then
+#  brew_install_or_upgrade 'phantomjs'
+#fi
+
+brew_install_or_upgrade 'hub'
 # shellcheck disable=SC2016
-# append_to_file "$HOME/.zshrc" 'eval "$(hub alias -s)"'
-brew install ffmpeg
-brew_install_or_upgrade 'node'
+append_to_file "$HOME/.zshrc" 'eval "$(hub alias -s)"'
+
+if ! brew_is_installed "node"; then
+  if ! command -v n > /dev/null; then
+    fancy_echo 'Installing n and latest Node.js and NPM...'
+    curl -L http://git.io/n-install | bash -s -- -y latest
+  else
+    fancy_echo 'Updating n...'
+    n-update -y
+  fi
+fi
+
 brew_install_or_upgrade 'python3'
 
 if ! pip3 list | ag "virtualenvwrapper" > /dev/null; then
   fancy_echo 'Installing virtualenvwrapper...'
   pip3 install virtualenvwrapper
-  append_to_file "$HOME/.bin" 'export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3'
-  append_to_file "$HOME/.bin" 'export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv'
-  append_to_file "$HOME/.bin" 'source /usr/local/bin/virtualenvwrapper.sh'
+  append_to_file "$HOME/.zshrc" 'export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3'
+  append_to_file "$HOME/.zshrc" 'export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv'
+  append_to_file "$HOME/.zshrc" 'source /usr/local/bin/virtualenvwrapper.sh'
 fi
 
 append_to_file "$HOME/.gemrc" 'gem: --no-document'
@@ -188,7 +199,7 @@ if ! command -v rbenv >/dev/null; then
     latest_version="$(curl -s https://raw.githubusercontent.com/wayneeseguin/rvm/stable/VERSION)"
     if [ "$local_version" != "$latest_version" ]; then
       fancy_echo 'Upgrading RVM...'
-      rvm get stable --auto-dotfiles --autolibs=enable
+      rvm get stable --auto-dotfiles --autolibs=enable --with-gems="bundler"
     else
       fancy_echo "Already using the latest version of RVM. Skipping..."
     fi
@@ -210,22 +221,27 @@ brew_install_or_upgrade 'brew-cask'
 
 brew_tap 'caskroom/versions'
 
-# brew_cask_install 'cloud'
+#brew_cask_install 'cloud'
 brew_cask_install 'flux'
-brew_cask_install 'github'
-#brew_cask_install 'slack'
+brew_cask_install 'github-desktop'
+brew_cask_install 'slack'
 #brew_cask_install 'sublime-text3'
-brew_cask_install 'atom'
 
 if [ -f "$HOME/.laptop.local" ]; then
   . "$HOME/.laptop.local"
 fi
 
 append_to_file "$HOME/.rvmrc" 'rvm_auto_reload_flag=2'
+append_to_file "$HOME/.rvm/gemsets/global.gems" 'bundler'
 
-#brew_tap 'pivotal/tap'
-#brew_install_or_upgrade 'cloudfoundry-cli'
+brew_tap 'pivotal/tap'
+brew_install_or_upgrade 'cloudfoundry-cli'
 
-if [ ! -f "$HOME/.ssh/github_rsa.pub" ]; then
-  open ~/Applications/GitHub.app
+if app_is_installed 'GitHub'; then
+  fancy_echo "It looks like you've already configured your GitHub SSH keys."
+  fancy_echo "If not, you can do it by signing in to the GitHub app on your Mac."
+elif [ ! -f "$HOME/.ssh/github_rsa.pub" ]; then
+  open ~/Applications/GitHub\ Desktop.app
 fi
+
+fancy_echo 'All done!'
