@@ -11,6 +11,23 @@ fancy_echo() {
   printf "\n$fmt\n" "$@"
 }
 
+append_to_file() {
+  local file="$1"
+  local text="$2"
+
+  if [ "$file" = "$HOME/.zshrc" ]; then
+    if [ -w "$HOME/.zshrc.local" ]; then
+      file="$HOME/.zshrc.local"
+    else
+      file="$HOME/.zshrc"
+    fi
+  fi
+
+  if ! grep -qs "^$text$" "$file"; then
+    printf "\n%s\n" "$text" >> "$file"
+  fi
+}
+
 # shellcheck disable=SC2154
 trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
@@ -19,6 +36,21 @@ set -e
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
+
+if [ ! -f "$HOME/.zshrc" ]; then
+  touch "$HOME/.zshrc"
+fi
+
+# shellcheck disable=SC2016
+append_to_file "$HOME/.zshrc" 'export PATH="$HOME/.bin:$PATH"'
+
+case "$SHELL" in
+  */zsh) : ;;
+  *)
+    fancy_echo "Changing your shell to zsh ..."
+      chsh -s "$(which zsh)"
+    ;;
+esac
 
 # shellcheck disable=SC2016
 append_to_file "$HOME/.bin" 'export PATH="$HOME/.bin:$PATH"'
