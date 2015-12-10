@@ -152,7 +152,7 @@ brew services restart postgresql
 #brew_install_or_upgrade 'hub'
 # shellcheck disable=SC2016
 # append_to_file "$HOME/.zshrc" 'eval "$(hub alias -s)"'
-
+brew install ffmpeg
 brew_install_or_upgrade 'node'
 brew_install_or_upgrade 'python3'
 
