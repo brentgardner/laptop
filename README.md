@@ -12,8 +12,8 @@ Requirements
 ------------
 
 We support:
-
-* [OS X Yosemite (10.10)](https://www.apple.com/osx/)
+* [OS X Mojave (10.14)](https://www.apple.com/osx/)]
+* OS X Yosemite (10.10)
 * OS X Mavericks (10.9)
 
 Older versions may work but aren't regularly tested. Bug reports for older
@@ -61,48 +61,34 @@ What it sets up
 ---------------
 
 * [CloudApp] for sharing screenshots and making an animated GIF from a video
-* [Cloud Foundry CLI] for command line access to 18F's Cloud Foundry-based application platform
-* [Flux] for adjusting your Mac's display color so you can sleep better
 * [GitHub for Mac] for setting up your SSH keys automatically
 * [Homebrew] for managing operating system libraries
 * [Homebrew Cask] for quickly installing Mac apps from the command line
 * [Homebrew Services] so you can easily stop, start, and restart services
-* [hub] for interacting with the GitHub API
 * [ImageMagick] for cropping and resizing images
-* [Node.js] and [NPM], for running apps and installing JavaScript packages
+* [NVM]
 * [Postgres] for storing relational data
-* [Python 3] for programming software and data analysis
-* [Qt] for headless JavaScript testing via Capybara Webkit
+* [Python3] for programming software and data analysis
 * [Redis] for storing key-value data
 * [RVM] for managing Ruby versions (includes [Bundler] and the latest [Ruby])
-* [Slack] for communicating with your team
-* [Sublime Text 3] for coding all the things
-* [The Silver Searcher] for finding things in files
+* [Visual Studio Code] for coding all the things
 * [Virtualenv] for creating isolated Python environments
 * [Virtualenvwrapper] for extending Virtualenv
 * [Zsh] as your shell
 
 [Bundler]: http://bundler.io/
 [CloudApp]: http://getcloudapp.com/
-[Cloud Foundry CLI]: https://github.com/cloudfoundry/cli
-[Flux]: https://justgetflux.com/
 [GitHub for Mac]: https://mac.github.com/
 [Homebrew]: http://brew.sh/
 [Homebrew Cask]: http://caskroom.io/
 [Homebrew Services]: https://github.com/gapple/homebrew-services
-[hub]: https://github.com/github/hub
 [ImageMagick]: http://www.imagemagick.org/
-[Node.js]: http://nodejs.org/
-[NPM]: https://www.npmjs.org/
 [Postgres]: http://www.postgresql.org/
-[Python 3]: https://www.python.org/
-[Qt]: http://qt-project.org/
+[Python3]: https://www.python.org/
 [Redis]: http://redis.io/
 [Ruby]: https://www.ruby-lang.org/en/
 [RVM]: https://github.com/wayneeseguin/rvm
-[Slack]: https://slack.com/
-[Sublime Text 3]: http://www.sublimetext.com/3
-[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
+[Visual Studio Code]: https://code.visualstudio.com/
 [Virtualenv]: https://virtualenv.pypa.io/en/latest/
 [Virtualenvwrapper]: http://virtualenvwrapper.readthedocs.org/en/latest/#
 [Zsh]: http://www.zsh.org/
